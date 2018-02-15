@@ -17,7 +17,7 @@
 <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
-			<h1><span class="icon icon-cog"></span><a href="#">WorkShop, {{.Title}}</a></h1>
+			<h1><span class="icon icon-cog"></span><a href="#">WorkShop</a></h1>
 			<div id="menu">
 				<ul>
 					<li class="current_page_item"><a href="#" accesskey="1" title="">Homepage</a></li>
@@ -33,7 +33,7 @@
 <div id="page-wrapper">
 	<div id="page" class="container">
 		<div class="title">
-			<h2>welcome to our website</h2>
+			<h2> welcome to our website</h2>
 		</div>
 		<p>This is <strong>workshop</strong>, a free platform to show your talents, help others and learn something interesting. </p>
 	</div>
@@ -63,34 +63,63 @@
 
 
 	<div id="portfolio" class="container">
-        <p><strong>Classes</strong> </p>
-		{{ range .Classes }}
-
-		<div class="column">
-			<div class="box"> <a href="#">
-				<h3>{{.ClassTitle}}: <p>{{.ClassSummary}}</p></h3>
-
-			</div>
+        <p><strong> Classes</strong> </p>
+		<div class="column1">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr01.jpg" alt="" class="image image-full" /></a>
+				<h3>{{.ClassTitle}}</h3>
+				<p>Fermentum nibh augue praesent a lacus at urna congue rutrum.</p>
+            </div>
 		</div>
-		{{end}}
+		<div class="column2">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr02.jpg" alt="" class="image image-full" /></a>
+				<h3>Praesent scelerisque</h3>
+				<p>Vivamus fermentum nibh in augue praesent urna congue rutrum.</p>
+            </div>
+		</div>
+		<div class="column3">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr03.jpg" alt="" class="image image-full" /></a>
+				<h3>Donec dictum metus</h3>
+				<p>Vivamus fermentum nibh in augue praesent urna congue rutrum.</p>
+            </div>
+		</div>
+		<div class="column4">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr04.jpg" alt="" class="image image-full" /></a>
+				<h3>Mauris vulputate dolor</h3>
+				<p>Rutrum fermentum nibh in augue praesent urna congue rutrum.</p>
+            </div>
+		</div>
 
         <p><strong> Contests </strong></p>
-
-		{{ range .Contests }}
-		<div class="column">
-			<div class="box"> <a href="#">
-				<h3>{{.ContestTitle}}: <p>{{.ContestSummary}}</p></h3>
-
+		<div class="column5">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr01.jpg" alt="" class="image image-full" /></a>
+				<h3>Vestibulum venenatis</h3>
+				<p>Fermentum nibh augue praesent a lacus at urna congue rutrum.</p>
+            </div>
+		</div>
+		<div class="column6">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr02.jpg" alt="" class="image image-full" /></a>
+				<h3>Praesent scelerisque</h3>
+				<p>Vivamus fermentum nibh in augue praesent urna congue rutrum.</p>
+            </div>
+		</div>
+		<div class="column7">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr03.jpg" alt="" class="image image-full" /></a>
+				<h3>Donec dictum metus</h3>
+				<p>Vivamus fermentum nibh in augue praesent urna congue rutrum.</p>
+            </div>
+		</div>
+		<div class="column8">
+			<div class="box"> <a href="#"><img src="{{ .Static }}images/scr04.jpg" alt="" class="image image-full" /></a>
+				<h3>Mauris vulputate dolor</h3>
+				<p>Rutrum fermentum nibh in augue praesent urna congue rutrum.</p>
 			</div>
 		</div>
-		{{end}}
-
 	</div>
 </div>
 <div id="wrapper2">
 	<div id="tools">
 		<div class="title">
-			<h2>Tomorrow is a new day.</h2>
+			<h2>Vivamus fermentum nibh</h2>
 		</div>
 		<ul class="tools">
 			<li><a href="#" class="icon icon-legal"></a></li>
