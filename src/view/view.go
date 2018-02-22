@@ -8,15 +8,20 @@ import (
 const STATIC_URL string = "/home/firebug/goweb/static/"
 
 var templates *template.Template
+var viewInfo View
 
 func init(){
-    templates = template.Must(template.ParseGlob("../templates/*")) //Template chching
+    templates = template.Must(template.ParseGlob("../templates/*")) //Template caching
 }
 
 type View struct {
     Name string
     Data map[string]interface{}
     request *http.Request
+}
+
+func Configure(vi View) {
+    viewInfo = vi
 }
 
 func New(req *http.Request) *View {

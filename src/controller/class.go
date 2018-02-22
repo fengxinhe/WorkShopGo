@@ -10,9 +10,9 @@ import (
     //"errors"
 )
 
-func IndexGet(w http.ResponseWriter, r *http.Request) {
+func ClassGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
-    v.Name = "index"
+    v.Name = "class"
     v.Data["Title"] = "Xinhe Feng"
     v.Data["Classes"] = model.GetClass()
     v.Data["Contests"] = model.GetContest()

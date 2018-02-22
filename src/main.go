@@ -2,75 +2,52 @@ package main
 
 import (
     //"fmt"
-    "io/ioutil"
-    "net/http"
-    "html/template"
-    "io"
-    "time"
-
-    "./controller"
+    "./controller/server"
+    "./view"
+    "./controller/route"
+    //"net/http"
     //"regexp"
     //"errors"
 )
-const STATIC_URL string = "/home/firebug/goweb/static/"
-const STATIC_ROOT string = "/home/firebug/goweb/static/"
 
-type Page struct {
-    Title string
-    Body  []byte
-    Static string
-}
 
-var templates *template.Template
-
-func init(){
-    templates = template.Must(template.ParseGlob("../templates/*")) //Template chching
-}
-
-func loadPage(title string) (*Page, error) {
-    filename := title + ".txt"
-    body, err := ioutil.ReadFile(filename)
-    if err != nil {
-        return nil, err
-    }
-    return &Page{Title: title, Body: body}, nil
-}
-
-func StaticHandler(w http.ResponseWriter, req *http.Request) {
-    static_file := req.URL.Path[len(STATIC_URL):]
-    if len(static_file) != 0 {
-        f, err := http.Dir(STATIC_ROOT).Open(static_file)
-        if err == nil {
-            content := io.ReadSeeker(f)
-            http.ServeContent(w, req, static_file, time.Now(), content)
-            return
-        }
-    }
-    http.NotFound(w, req)
-}
-
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page){
-    p.Static = STATIC_URL
-    err := templates.ExecuteTemplate(w, tmpl+".html",p)
-    if err != nil{
-        http.Error(w,err.Error(), http.StatusInternalServerError)
-    }
-}
-
-// func indexHandler(w http.ResponseWriter, r *http.Request){
-//     //content := &Page{Title: "main", Body: []byte("kkk")}
-//     content := model.GetIndexContent()
-//     //renderTemplate(w, "index",content)
-//     content.Static = STATIC_URL
-//     templates.ExecuteTemplate(w, "index"+".html",content)
+// func loadPage(title string) (*Page, error) {
+//     filename := title + ".txt"
+//     body, err := ioutil.ReadFile(filename)
+//     if err != nil {
+//         return nil, err
+//     }
+//     return &Page{Title: title, Body: body}, nil
 // }
 
+type configuration struct {
+//	Database  database.Info   `json:"Database"`
+//	Email     email.SMTPInfo  `json:"Email"`
+//	Recaptcha recaptcha.Info  `json:"Recaptcha"`
+	Server    server.Server
+//	Session   session.Session `json:"Session"`
+//	Template  view.Template
+	View      view.View
+}
+
+var config = &configuration{}
+const STATIC_URL string = "/home/firebug/goweb/static/"
 
 func main() {
 
-    //myMux := http.NewServeMux()
-    http.HandleFunc("/", controller.IndexGet)
-    http.HandleFunc(STATIC_URL, StaticHandler)
 
-    http.ListenAndServe(":8000", nil)
+    //view.Configure(config.View)
+	//view.LoadTemplates(config.Template.Root, config.Template.Children)
+
+    config.Server= server.Server{
+        HostName: "localhost",
+        UseHttp: true,
+        UseHttps: false,
+        HttpPort: "8000",
+        HttpsPort: "8080",
+    }
+	// Start the listener
+    server.Run(route.LoadHTTP(), route.LoadHTTPS(), config.Server)
+
+    //http.ListenAndServe(":8000", nil)
 }

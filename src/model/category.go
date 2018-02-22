@@ -3,6 +3,8 @@ package model
 type Class struct {
     ClassTitle string
     ClassSummary string
+    FirstTag string
+    SecondTag string
     // Content []byte
     // ImgUrl string
     // VideoUrl string
