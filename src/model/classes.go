@@ -17,7 +17,7 @@ func GetClassByTag(tag1 string, tag2 string) *[]Class{
     return classes
 }
 
-func GetClassByHeat() *[]Class{
-    //class := from db
-    
-}
+// func GetClassByHeat() *[]Class{
+//     //class := from db
+//
+// }

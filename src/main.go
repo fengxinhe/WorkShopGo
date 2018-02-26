@@ -1,10 +1,15 @@
 package main
 
 import (
-    //"fmt"
+    "fmt"
+    "os"
+    "encoding/json"
     "./controller/server"
+    "./controller/static"
     "./view"
     "./controller/route"
+    "./public/database"
+    "./public/jsonconfig"
     //"net/http"
     //"regexp"
     //"errors"
@@ -21,33 +26,34 @@ import (
 // }
 
 type configuration struct {
-//	Database  database.Info   `json:"Database"`
+	Database  database.Info   `json:"Database"`
 //	Email     email.SMTPInfo  `json:"Email"`
 //	Recaptcha recaptcha.Info  `json:"Recaptcha"`
-	Server    server.Server
+	Server    server.Server   `json:"Server"`
 //	Session   session.Session `json:"Session"`
 //	Template  view.Template
-	View      view.View
+	View      view.View       `json:"View"`
+    Static    static.StaticInfo    `json:"Static"`
 }
 
 var config = &configuration{}
-const STATIC_URL string = "/home/firebug/goweb/static/"
 
 func main() {
+    fmt.Println("start")
 
+    jsonconfig.LoadConfig("config" + string(os.PathSeparator)+"config.json", config)
+    view.Configure(config.View)
+    static.Configure(config.Static)
+    database.Connect(config.Database)
 
-    //view.Configure(config.View)
 	//view.LoadTemplates(config.Template.Root, config.Template.Children)
 
-    config.Server= server.Server{
-        HostName: "localhost",
-        UseHttp: true,
-        UseHttps: false,
-        HttpPort: "8000",
-        HttpsPort: "8080",
-    }
 	// Start the listener
     server.Run(route.LoadHTTP(), route.LoadHTTPS(), config.Server)
 
     //http.ListenAndServe(":8000", nil)
+}
+
+func (c *configuration) ParseJSON(b []byte) error {
+	return json.Unmarshal(b, &c)
 }

@@ -1,6 +1,7 @@
 package model
 
 type Class struct {
+    ClassID string
     ClassTitle string
     ClassSummary string
     FirstTag string

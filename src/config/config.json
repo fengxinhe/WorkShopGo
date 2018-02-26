@@ -1,0 +1,33 @@
+{
+    "Database" : {
+        "Type" : "MongoDB",
+        "MongoDB" : {
+            "URL": "127.0.0.1",
+            "Database": "goweb"
+        },
+        "MySQL": {
+			"Username": "root",
+			"Password": "",
+			"Name": "goweb",
+			"Hostname": "127.0.0.1",
+			"Port": 2323,
+			"Parameter": "?parseTime=true"
+        }
+    },
+    "Server": {
+        "HostName" : "localhost",
+        "UseHttp": true,
+        "UseHttps": false,
+        "HttpPort": "8000",
+        "HttpsPort": "8000"
+    },
+    "View": {
+        "StaticURL" : "/home/firebug/goweb/static/",
+        "BaseURI" : "/",
+        "Name" : "blank"
+    },
+    "Static":{
+        "STATIC_URL":"/home/firebug/goweb/static/",
+        "STATIC_ROOT":"/home/firebug/goweb/static/"
+    }
+}

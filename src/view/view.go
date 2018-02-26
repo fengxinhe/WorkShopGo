@@ -15,6 +15,8 @@ func init(){
 }
 
 type View struct {
+    BaseURI string
+    StaticURL string
     Name string
     Data map[string]interface{}
     request *http.Request
@@ -29,7 +31,7 @@ func New(req *http.Request) *View {
     v.Data = make(map[string]interface{})
 
     v.request = req
-    v.Data["Static"] = STATIC_URL
+    v.Data["Static"] = viewInfo.StaticURL
     return v
 }
 

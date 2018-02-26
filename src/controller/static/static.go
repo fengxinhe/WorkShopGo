@@ -1,4 +1,4 @@
-package controller
+package static
 
 import(
     "net/http"
@@ -8,10 +8,18 @@ import(
     "time"
 )
 
-
+type StaticInfo struct {
+    STATIC_URL string
+    STATIC_ROOT string
+}
 const STATIC_URL string = "/home/firebug/goweb/static/"
 const STATIC_ROOT string = "/home/firebug/goweb/static/"
 
+var staticinfo StaticInfo
+
+func Configure(s StaticInfo) {
+    staticinfo = s
+}
 
 func StaticHandler(w http.ResponseWriter, r *http.Request) {
     if strings.HasSuffix(r.URL.Path, "/") {
@@ -21,10 +29,14 @@ func StaticHandler(w http.ResponseWriter, r *http.Request) {
     http.ServeFile(w, r, r.URL.Path[1:])
 }
 
+func GetInfo() string{
+    return staticinfo.STATIC_ROOT
+}
+
 func Static(w http.ResponseWriter, req *http.Request) {
-    static_file := req.URL.Path[len(STATIC_URL):]
+    static_file := req.URL.Path[len(staticinfo.STATIC_URL):]
     if len(static_file) != 0 {
-        f, err := http.Dir(STATIC_ROOT).Open(static_file)
+        f, err := http.Dir(staticinfo.STATIC_ROOT).Open(static_file)
         if err == nil {
             content := io.ReadSeeker(f)
             http.ServeContent(w, req, static_file, time.Now(), content)

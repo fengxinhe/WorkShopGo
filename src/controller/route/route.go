@@ -4,6 +4,7 @@ import (
     "net/http"
     "github.com/julienschmidt/httprouter"
     "github.com/gorilla/context"
+    "../static"
     "../"
 )
 
@@ -19,9 +20,9 @@ func LoadHTTP() http.Handler {
 func routes() *httprouter.Router {
     router := httprouter.New()
     //router.ServeFiles("/static/*filepath", http.Dir("/home/firebug/goweb/"))
-    router.GET("/home/firebug/goweb/static/*filepath",wrapHandler(http.HandlerFunc(controller.Static)))
+    router.GET("/home/firebug/goweb/static/*filepath",wrapHandler(http.HandlerFunc(static.Static)))
     router.GET("/", wrapHandler(http.HandlerFunc(controller.IndexGet)))
-    router.GEt("/classes", wrapHandler(http.HandlerFunc(controller.ClassGet)))
+    router.GET("/classes", wrapHandler(http.HandlerFunc(controller.ClassGet)))
 
     return router
 }
