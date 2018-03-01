@@ -1,3 +1,4 @@
+{{define "base"}}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,55 +39,16 @@
 		<p>This is <strong>workshop</strong>, a free platform to show your talents, help others and learn something interesting. </p>
 	</div>
 </div>
+
+
 <div class="wrapper">
-	<div id="three-column" class="container">
-		<div><span class="arrow-down"></span></div>
-		<div id="tbox1">
-			<div class="title">
-				<h2>Win a contest</h2>
-			</div>
-			<p>Are you the best? Competing in various design, craft or DIY contests.</p>
-			<a href="#" class="button">Learn More</a> </div>
-		<div id="tbox2">
-			<div class="title">
-				<h2>Top classes</h2>
-			</div>
-			<p>Come and see the most popular classes!</p>
-			<a href="#" class="button">Learn More</a> </div>
-		<div id="tbox3">
-			<div class="title">
-				<h2>Be a teacher</h2>
-			</div>
-			<p>Do you have any crazy but useful ideas? Just show it to others!</p>
-			<a href="#" class="button">Learn More</a> </div>
-	</div>
+
+{{template "content" .}}
 
 
-	<div id="portfolio" class="container">
-
-        <p><strong>Classes</strong> </p>
-		{{ range .Classes }}
-
-		<div class="column">
-			<div class="box"> <a href="#">
-				<h3>{{.ClassTitle}}: <p>{{.ClassSummary}}</p></h3>
-
-			</div>
-		</div>
-		{{end}}
-
-        <p><strong>Contests</strong></p>
-		{{ range .Contests }}
-		<div class="column">
-			<div class="box"> <a href="#">
-				<h3>{{.ContestTitle}}: <p>{{.ContestSummary}}</p></h3>
-
-			</div>
-		</div>
-		{{end}}
-
-	</div>
 </div>
+
+
 <div id="wrapper2">
 	<div id="tools">
 		<div class="title">
@@ -116,3 +78,5 @@
 </div>
 </body>
 </html>
+
+{{end}}

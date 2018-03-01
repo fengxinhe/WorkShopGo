@@ -2,7 +2,7 @@ package static
 
 import(
     "net/http"
-    "strings"
+//    "strings"
     "fmt"
     "io"
     "time"
@@ -12,21 +12,11 @@ type StaticInfo struct {
     STATIC_URL string
     STATIC_ROOT string
 }
-const STATIC_URL string = "/home/firebug/goweb/static/"
-const STATIC_ROOT string = "/home/firebug/goweb/static/"
 
 var staticinfo StaticInfo
 
 func Configure(s StaticInfo) {
     staticinfo = s
-}
-
-func StaticHandler(w http.ResponseWriter, r *http.Request) {
-    if strings.HasSuffix(r.URL.Path, "/") {
-		Error404(w, r)
-		return
-	}
-    http.ServeFile(w, r, r.URL.Path[1:])
 }
 
 func GetInfo() string{
@@ -48,7 +38,7 @@ func Static(w http.ResponseWriter, req *http.Request) {
 
 
 func GETStaticURL() string {
-    return "/home/firebug/goweb/static/"
+    return staticinfo.STATIC_URL
 }
 
 func Error404(w http.ResponseWriter, r *http.Request) {

@@ -24,6 +24,9 @@ func routes() *httprouter.Router {
     router.GET("/", wrapHandler(http.HandlerFunc(controller.IndexGet)))
     router.GET("/classes", wrapHandler(http.HandlerFunc(controller.ClassGet)))
 
+    router.GET("/classes/create",wrapHandler(http.HandlerFunc(controller.CreateClassGet)))
+
+    router.POST("/classes/create",wrapHandler(http.HandlerFunc(controller.CreateClassPost)))
     return router
 }
 

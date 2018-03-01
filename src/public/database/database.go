@@ -4,6 +4,7 @@ import(
     "time"
     "log"
     "gopkg.in/mgo.v2"
+    "fmt"
 )
 type Type string
 const (
@@ -49,6 +50,7 @@ func Connect(d Info) {
     if err = Mongo.Ping(); err != nil {
         log.Println("Database erro", err)
     }
+    CheckConnection()
 }
 
 func CheckConnection() bool{
@@ -56,7 +58,12 @@ func CheckConnection() bool{
         Connect(database)
     }
     if Mongo != nil {
+        fmt.Println("db ok")
         return true
     }
     return false
+}
+
+func ReadConfig() Info {
+	return database
 }

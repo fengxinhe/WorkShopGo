@@ -1,0 +1,33 @@
+
+{{define "content"}}
+
+<div class="wrapper">
+
+	<form method="post">
+		<div class="form-group">
+			<label for="class_title">Class Title</label>
+			<div><input type="text" class="form-control" id="class_title" name="class_title" maxlength="48" placeholder="class_title" value="{{.class_title}}" /></div>
+		</div>
+
+		<div class="form-group">
+			<label for="class_summary">Class Summary</label>
+			<div><input type="text" class="form-control" id="class_summary" name="class_summary" maxlength="48" placeholder="class_summary" value="{{.class_summary}}" /></div>
+		</div>
+
+		<div class="form-group">
+			<label for="first_tag">First tag</label>
+			<div><input type="text" class="form-control" id="first_tag" name="first_tag" maxlength="48" placeholder="1" value="{{.first_tag}}" /></div>
+		</div>
+		<div class="form-group">
+			<label for="second_tag">Second tag</label><div>
+			<input type="text" class="form-control" id="second_tag" name="second_tag" maxlength="48" placeholder="2" value="{{.second_tag}}" />	</div>
+		</div>
+
+
+		<input type="submit" value="Create Account" class="btn btn-primary" />
+
+	</form>
+
+</div>
+
+{{end}}

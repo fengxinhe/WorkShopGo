@@ -1,11 +1,17 @@
 package model
 
+import(
+    	"gopkg.in/mgo.v2/bson"
+        "../public/database"
+        "log"
+        "fmt"
+)
 type Class struct {
-    ClassID string
-    ClassTitle string
-    ClassSummary string
-    FirstTag string
-    SecondTag string
+    ClassID         bson.ObjectId       `bson:"class_id"`
+    ClassTitle      string              `bson:"class_title"`
+    ClassSummary    string
+    FirstTag        string
+    SecondTag       string
     // Content []byte
     // ImgUrl string
     // VideoUrl string
@@ -24,10 +30,29 @@ type IndexContent struct {
     Static string
 }
 
-func GetClass() *[]Class{
-    classes := &[]Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},
-                Class{ClassTitle: "cl2", ClassSummary: "bbbbb"},}
-    return classes
+func GetClass() (*[]Class){
+//    classes := &[]Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},
+//                Class{ClassTitle: "cl2", ClassSummary: "bbbbb"},}
+
+    var classes []Class
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("class")
+    err := c.Find(bson.M{}).All(&classes)
+    if err != nil {
+        log.Println("get class error",err)
+    }
+    fmt.Println("getclass")
+    return &classes
+}
+
+func CreateClass(class Class) error{
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("class")
+    err := c.Insert(&class)
+    fmt.Println("create_class")
+    return err
 }
 
 func GetContest() *[]Contest{
