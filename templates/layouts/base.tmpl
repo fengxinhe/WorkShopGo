@@ -18,7 +18,7 @@
 <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
-			<h1><span class="icon icon-cog"></span><a href="#">WorkShop, {{.Title}}</a></h1>
+			<h1><span class="icon icon-cog"></span><a href="#">WorkShop, {{block "Title" .}} {{end}}</a></h1>
 			<div id="menu">
 				<ul>
 					<li class="current_page_item"><a href="#" accesskey="1" title="">Homepage</a></li>
