@@ -9,9 +9,11 @@ import(
 type Class struct {
     ClassID         bson.ObjectId       `bson:"class_id"`
     ClassTitle      string              `bson:"class_title"`
-    ClassSummary    string
-    FirstTag        string
-    SecondTag       string
+    ClassSummary    string              `bson:"class_summary"`
+    FirstTag        string              `bson:"class_tag1"`
+    SecondTag       string              `bson:"class_tag2"`
+    ClassContent    string              `bson:"class_content"`
+    ClassHeat       int                 `bson:"class_heat"`
     // Content []byte
     // ImgUrl string
     // VideoUrl string
@@ -23,14 +25,7 @@ type Contest struct {
     //ImgUrl string
 }
 
-type IndexContent struct {
-    Title string
-    Classes []Class
-    Contests []Contest
-    Static string
-}
-
-func GetClass() (*[]Class){
+func GetClasses() (*[]Class){
 //    classes := &[]Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},
 //                Class{ClassTitle: "cl2", ClassSummary: "bbbbb"},}
 
@@ -55,19 +50,15 @@ func CreateClass(class Class) error{
     return err
 }
 
-func GetContest() *[]Contest{
-    contests := &[]Contest{Contest{ContestTitle: "t1", ContestSummary: "ccccc"},
-                Contest{ContestTitle: "t2", ContestSummary: "dddddd"},}
-    return contests
-}
-
-func GetIndexContent() *IndexContent {
-    content := &IndexContent{
-        Title: "DUDU",
-        Classes: []Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},
-                    Class{ClassTitle: "cl2", ClassSummary: "bbbbb"},},
-        Contests: []Contest{Contest{ContestTitle: "t1", ContestSummary: "ccccc"},
-                    Contest{ContestTitle: "t2", ContestSummary: "dddddd"},},
+func GetClassesByHeat() (*[]Class) {
+    var classes []Class
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("class")
+    err := c.Find(bson.M{}).Sort("-class_heat").Limit(3).All(&classes)
+    if err != nil {
+        log.Println("get class error",err)
     }
-    return content
+    //fmt.Println("getclass")
+    return &classes
 }

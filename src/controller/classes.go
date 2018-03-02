@@ -17,8 +17,8 @@ func ClassGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "class"
     v.Data["Title"] = "Xinhe Feng"
-    v.Data["Classes"] = model.GetClass()
-    v.Data["Contests"] = model.GetContest()
+    v.Data["Classes"] = model.GetClasses()
+    //v.Data["Contests"] = model.GetContest()
     v.RenderTemplate(w)
     return
 }
@@ -26,7 +26,7 @@ func ClassGet(w http.ResponseWriter, r *http.Request) {
 func CreateClassGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "create_class"
-    view.Repopulate([]string{"class_title", "class_summary", "first_tag","secondtag"}, r.Form, v.Data)
+    view.Repopulate([]string{"class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
     v.RenderTemplate(w)
 }
 // type Class struct {
@@ -45,8 +45,10 @@ func CreateClassPost(w http.ResponseWriter, r *http.Request) {
     class.ClassID = bson.NewObjectId()
     class.ClassTitle = r.FormValue("class_title")
     class.ClassSummary = r.FormValue("class_summary")
+    class.ClassContent = r.FormValue("class_content")
     class.FirstTag = r.FormValue("first_tag")
     class.SecondTag = r.FormValue("second_tag")
+    class.ClassHeat = 10
 
     if err := model.CreateClass(class); err != nil {
         log.Println(err)

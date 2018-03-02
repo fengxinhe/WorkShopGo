@@ -24,9 +24,9 @@
     - 全部
         [最热： 时尚 甜品 科学 木工 汽车 生存]
     - 科技
-        [Arduino 计算机 无线 树莓派 机器人 数字图像]
+        [Arduino 计算机 无线 树莓派 机器人 数字图像 视频]
     - 手工
-        [艺术 布艺 陶艺 纸艺 皮具 礼物 首饰 缝纫 卡片]
+        [艺术 布艺 陶艺 纸艺 皮具 礼物 首饰 缝纫 卡片 时尚]
     - 工作坊
         [汽车 照明 金属加工 摩托车 太阳能 工具 ]
     - 家庭
@@ -50,3 +50,17 @@
     账户等级
     好友
     信箱
+
+# Data model
+
+- Class
+        ClassID ClassTitle ClassSummary ClassContent
+        FirstTag SecondTag ClassHeat
+- Project
+        ProjectID ProjectTitle ProjectSummary ProjectContent
+        FirstTag SecondTag ProjectHeat
+- Contest
+        ContestID ContestTitle ContestSummary ContestContent
+- User
+        UserID UserFirstname Userlastname UserNickname
+        UserEmail UserPhone UserLocation UserPsd

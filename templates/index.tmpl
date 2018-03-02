@@ -30,17 +30,17 @@
 
 		<div class="column">
 			<div class="box"> <a href="#">
-				<h3>{{.ClassTitle}}: <p>{{.ClassSummary}}</p></h3>
+				<h3>{{.ClassTitle}} <p>{{.ClassSummary}}</p></h3>
 
 			</div>
 		</div>
 		{{end}}
 
         <p><strong>Contests</strong></p>
-		{{ range .Contests }}
+		{{ range .Projects }}
 		<div class="column">
 			<div class="box"> <a href="#">
-				<h3>{{.ContestTitle}}: <p>{{.ContestSummary}}</p></h3>
+				<h3>{{.ProjectTitle}}: <p>{{.ProjectSummary}}</p></h3>
 
 			</div>
 		</div>
