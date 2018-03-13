@@ -37,7 +37,7 @@ type configuration struct {
 }
 
 var config = &configuration{}
-
+//sudo service mongod start
 func main() {
     fmt.Println("start")
 

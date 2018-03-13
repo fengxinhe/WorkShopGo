@@ -2,13 +2,13 @@ package model
 
 import(
     	"gopkg.in/mgo.v2/bson"
-    //    "../public/database"
-    //    "log"
+        "../public/database"
+        "log"
     //    "fmt"
 )
 
 type Project struct{
-    ProjectID       bson.ObjectId       `bson:"project_id"`
+    ProjectID       bson.ObjectId       `bson:"project_id,omitempty"`
     ProjectTitle    string              `bson:"project_title"`
     ProjectSummary  string              `bson:"project_summary"`
     ProjectContent  string              `bson:"project_content"`
@@ -18,17 +18,22 @@ type Project struct{
 }
 
 
-func GetProjectByTag(tag1 string, tag2 string) *[]Class{
+func GetProjectByTag(tag1 string, tag2 string) *[]Project{
+    var projects []Project
 
-    classes := &[]Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},
-                Class{ClassTitle: "cl2", ClassSummary: "bbbbb"},}
-    return classes
+    return &projects
 }
 
-func GetProjects() *[]Contest{
-    contests := &[]Contest{Contest{ContestTitle: "t1", ContestSummary: "ccccc"},
-                Contest{ContestTitle: "t2", ContestSummary: "dddddd"},}
-    return contests
+func GetProjects() *[]Project{
+    var projects []Project
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("project")
+    err := c.Find(bson.M{}).All(&projects)
+    if err != nil {
+        log.Println("get project error",err)
+    }
+    return &projects
 }
 
 // func GetClassByHeat() *[]Class{

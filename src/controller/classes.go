@@ -1,7 +1,9 @@
 package controller
 
 import (
-    //"fmt"
+    "fmt"
+    "os"
+    "io"
     //"io/ioutil"
     "net/http"
     "../view"
@@ -26,7 +28,7 @@ func ClassGet(w http.ResponseWriter, r *http.Request) {
 func CreateClassGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "create_class"
-    view.Repopulate([]string{"class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
+    view.Repopulate([]string{"class_surface_img","class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
     v.RenderTemplate(w)
 }
 // type Class struct {
@@ -42,6 +44,25 @@ func CreateClassGet(w http.ResponseWriter, r *http.Request) {
 func CreateClassPost(w http.ResponseWriter, r *http.Request) {
 
     var class model.Class
+    r.ParseMultipartForm(32 << 20)
+    file, handler, err := r.FormFile("class_surface_img")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    //imgSize, err := strconv.Atoi(r.FormValue("imgsize"))
+    defer file.Close()
+
+    filepath := "/home/firebug/goweb/static/images/class/"+handler.Filename
+    fmt.Println("file"+filepath)
+    f, err := os.OpenFile(filepath, os.O_WRONLY|os.O_CREATE, 0666)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer f.Close()
+    io.Copy(f, file)
+    class.ClassSurfaceImg = filepath
     class.ClassID = bson.NewObjectId()
     class.ClassTitle = r.FormValue("class_title")
     class.ClassSummary = r.FormValue("class_summary")

@@ -7,13 +7,15 @@ import(
         "fmt"
 )
 type Class struct {
-    ClassID         bson.ObjectId       `bson:"class_id"`
+    ClassID         bson.ObjectId       `bson:"class_id,omitempty"`
     ClassTitle      string              `bson:"class_title"`
     ClassSummary    string              `bson:"class_summary"`
     FirstTag        string              `bson:"class_tag1"`
     SecondTag       string              `bson:"class_tag2"`
     ClassContent    string              `bson:"class_content"`
     ClassHeat       int                 `bson:"class_heat"`
+    ClassSurfaceImg string              `bson:"class_imgs"`
+    
     // Content []byte
     // ImgUrl string
     // VideoUrl string
