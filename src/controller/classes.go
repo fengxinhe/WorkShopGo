@@ -13,6 +13,9 @@ import (
     //"errors"
     "gopkg.in/mgo.v2/bson"
 
+    //"image"
+    //"image/jpeg"
+    //"github.com/disintegration/imaging"
 )
 
 func ClassGet(w http.ResponseWriter, r *http.Request) {
@@ -45,23 +48,24 @@ func CreateClassPost(w http.ResponseWriter, r *http.Request) {
 
     var class model.Class
     r.ParseMultipartForm(32 << 20)
-    file, handler, err := r.FormFile("class_surface_img")
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    //imgSize, err := strconv.Atoi(r.FormValue("imgsize"))
-    defer file.Close()
+   file, handler, err := r.FormFile("class_surface_img")
+   if err != nil {
+       fmt.Println(err)
+       return
+   }
+   //imgSize, err := strconv.Atoi(r.FormValue("imgsize"))
+   defer file.Close()
 
-    filepath := "/home/firebug/goweb/static/images/class/"+handler.Filename
-    fmt.Println("file"+filepath)
-    f, err := os.OpenFile(filepath, os.O_WRONLY|os.O_CREATE, 0666)
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    defer f.Close()
+   filepath := "/home/firebug/goweb/static/images/class/"+handler.Filename
+   fmt.Println("file"+filepath)
+   f, err := os.OpenFile(filepath, os.O_WRONLY|os.O_CREATE, 0666)
+   if err != nil {
+       fmt.Println(err)
+       return
+   }
+   defer f.Close()
     io.Copy(f, file)
+    //imaging.Save(resizedimg, filepath)
     class.ClassSurfaceImg = filepath
     class.ClassID = bson.NewObjectId()
     class.ClassTitle = r.FormValue("class_title")
@@ -81,4 +85,9 @@ func CreateClassPost(w http.ResponseWriter, r *http.Request) {
     }
 
     CreateClassPost(w, r)
+}
+
+
+func WriteNewPost(w http.ResponseWriter, r *http.Request) {
+    
 }

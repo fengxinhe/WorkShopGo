@@ -17,6 +17,14 @@ type Project struct{
     ProjectHeat     int                 `bson:"project_heat"`
 }
 
+type Step struct {
+    ProjectID       bson.ObjectId
+    Imgs            string
+    Videos          string
+    Text            string
+
+}
+
 
 func GetProjectByTag(tag1 string, tag2 string) *[]Project{
     var projects []Project

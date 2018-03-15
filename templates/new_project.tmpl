@@ -1,0 +1,116 @@
+{{define "Title"}} new class {{end}}
+
+{{define "content"}}
+
+<div class="step-container">
+
+    <form action="/featured/create" id="project-content" enctype="multipart/form-data" method="post">
+
+            <div class="project-title">
+                <label for="class_title">project Title</label>
+                <div><input type="text" class="form-control" id="project_title" name="project_title" maxlength="48" placeholder="title" value="{{.project_title}}" /></div>
+            </div>
+
+            <div class="stepContent-left">
+                        <label for="project_img">img</label>
+                        <div><input type="file" name="step_imgs[]" multiple="multiple"/></div>
+            </div>
+            
+            <div id="steps">
+
+            <div id="step1" class="step">
+
+                        <div class="stepTitleWrapper">
+                            <div><input id="steptitle1"type="text" class="step-title" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" />tt</div>
+
+                        </div>
+
+                        <div class="BodyText">
+
+                            <button id="edit" class="btn btn-primary"  type="button">Edit</button>
+                            <button id="save" class="btn btn-primary"  type="button">Save</button>
+
+                            <div id="summernote-container">
+
+                            </div>
+                        </div>
+            </div>
+        </div>
+
+            <button id="btn" type="button" class="btn btn-default">Add</button>
+
+            <div class="form-submit">
+                    <input type="submit" value="publish" class="btn btn-primary" />
+            </div>
+
+
+    </form>
+
+
+</div>
+
+<script>
+
+var stepcount=1;
+
+document.getElementById('steps').addEventListener('click', function (e) {
+
+  if (e.target.nodeName == "BUTTON") {
+
+      var btnid= e.target.id;
+      console.log("ok"+btnid);
+      if(btnid.search("edit")!=-1){
+          stepcnt=btnid.substring(4);
+          editorid="summernote-container"+stepcnt;
+          edit(editorid);
+      }else if(btnid.search("save")!=-1){
+          stepcnt=btnid.substring(4)
+          editorid="summernote-container"+stepcnt
+          save(editorid);
+      }
+  }
+});
+
+function edit(id){
+    console.log("dd");
+    $('#'+id).summernote({focus: true});
+}
+function save(id){
+    var markup = $('#'+id).summernote('code');
+    $('#'+id).summernote('destroy');
+}
+
+$('#btn').click(function (e) {
+  e.preventDefault();
+  // 01. create <div> with class named summernote
+  // 02. append to container
+  // 03. initialize editor
+  stepcount++;
+
+  var nextstep=$('<div></div>');
+  nextstep.attr('id', "step"+stepcount);
+  nextstep.addClass("step");
+
+  var titlebar=$('<div class="stepTitleWrapper"><div><input type="text" class="step-title" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" /></div></div>');
+  titlebar.attr('id',"steptitle"+stepcount);
+
+  var editbtn=$('<button class="btn btn-primary" type="button"> edit</button>');
+  editbtn.attr("id","edit"+stepcount);
+  var savebtn=$('<button class="btn btn-primary" type="button"> save</button>');
+  savebtn.attr('id',"save"+stepcount);
+
+  titlebar.appendTo(nextstep);
+  editbtn.appendTo(nextstep);
+  savebtn.appendTo(nextstep);
+
+  var editor=$('<div> </div>');
+  editor.attr('id',"summernote-container"+stepcount);
+  editor.appendTo(nextstep);
+
+
+  nextstep.appendTo('#steps')
+
+});
+</script>
+
+{{end}}

@@ -24,7 +24,7 @@
 
 
 	<div id="portfolio" class="container">
-
+		<div id="classes">
         <p><strong>Classes</strong> </p>
 		{{ range .Classes }}
 
@@ -37,8 +37,10 @@
 			</div>
 		</div>
 		{{end}}
+	</div>
 
-        <p><strong>Contests</strong></p>
+	<div id="projects">
+        <p><strong>Projects</strong></p>
 		{{ range .Projects }}
 		<div class="column">
 			<div class="box"> <a href="#">
@@ -47,6 +49,7 @@
 			</div>
 		</div>
 		{{end}}
+	</div>
 
 	</div>
 {{end}}

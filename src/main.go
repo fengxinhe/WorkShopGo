@@ -57,3 +57,10 @@ func main() {
 func (c *configuration) ParseJSON(b []byte) error {
 	return json.Unmarshal(b, &c)
 }
+
+
+// <input id="x" type="hidden" name="step_content">
+// <trix-editor input="x"></trix-editor>
+
+//Javascript, JQuery, Backbone, Node, HTML5, CSS, Sass, Bootstrap,
+// Python, PHP, Java, XML/XSLT, SQL, Google Tag Manager, Git.

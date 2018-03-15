@@ -18,8 +18,8 @@
         "HostName" : "localhost",
         "UseHttp": true,
         "UseHttps": false,
-        "HttpPort": "8000",
-        "HttpsPort": "8000"
+        "HttpPort": "8800",
+        "HttpsPort": "8800"
     },
     "View": {
         "StaticURL" : "/home/firebug/goweb/static/",

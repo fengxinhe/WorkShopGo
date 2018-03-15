@@ -15,17 +15,14 @@ type Class struct {
     ClassContent    string              `bson:"class_content"`
     ClassHeat       int                 `bson:"class_heat"`
     ClassSurfaceImg string              `bson:"class_imgs"`
-    
+    ClassStep       []Step
     // Content []byte
     // ImgUrl string
     // VideoUrl string
 }
 
-type Contest struct {
-    ContestTitle string
-    ContestSummary string
-    //ImgUrl string
-}
+
+
 
 func GetClasses() (*[]Class){
 //    classes := &[]Class{Class{ClassTitle: "cl1", ClassSummary: "aaaaa"},

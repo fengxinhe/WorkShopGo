@@ -14,7 +14,7 @@ func IndexGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "index"
     //v.Data["Title"] = "Xinhe Feng"
-    v.Data["Classes"] = model.GetClassesByHeat()
+    v.Data["Classes"] = model.GetClasses()
     //v.Data["Projects"] = model.GetProjects()
     v.RenderTemplate(w)
     return
