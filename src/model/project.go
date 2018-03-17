@@ -4,16 +4,18 @@ import(
     	"gopkg.in/mgo.v2/bson"
         "../public/database"
         "log"
-    //    "fmt"
+       "fmt"
 )
 
 type Project struct{
-    ProjectID       bson.ObjectId       `bson:"project_id,omitempty"`
-    ProjectTitle    string              `bson:"project_title"`
-    ProjectSteps    map[string]string   `bson:"project_steps"`
-    ProjectCategory string              `bson:"project_tag1"`
-    ProjectChannel  string              `bson:"project_tag2"`
-    ProjectHeat     int                 `bson:"project_heat"`
+    ProjectID           bson.ObjectId       `bson:"project_id"`
+    ProjectTitle        string              `bson:"project_title"`
+    ProjectSteps        map[string]string   `bson:"project_steps"`
+    ProjectCategory     string              `bson:"project_category"`
+    ProjectChannel      string              `bson:"project_channel"`
+    ProjectHeat         int                 `bson:"project_heat"`
+    ProjectStepNum      int                 `bson:"project_stepnum"`
+    ProjectStepTitle    []string            `bson:"project_step_title"`
 }
 
 type Step struct {
@@ -23,6 +25,15 @@ type Step struct {
     Videos          []string
     Text            string
 
+}
+
+func CreateProject(project Project) error{
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("project")
+    err := c.Insert(&project)
+    fmt.Println("create_projrct")
+    return err
 }
 
 

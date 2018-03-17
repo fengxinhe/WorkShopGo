@@ -1,0 +1,48 @@
+{{define "Title"}} whos project {{end}}
+
+{{define "content"}}
+
+
+<div style="width: 60%; margin: auto;">
+
+<div id="summertest" class="summertest">
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+
+
+//$(document).ready(function() {
+
+
+    //$('.summertest').summernote("code",markup);
+
+
+//});
+$('.summertest').summernote('code',{{.Content}});
+$('.summertest').summernote('destroy')
+window.onload = main;
+
+function main() {
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('GET', '/featured/show', true);
+    // xhr.send();
+    //
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState == 4) { // 读取完成
+    //         if (xhr.status == 200) {
+    //             $('.summertest').summernote("code",xhr.responseText);
+    //         }
+    //     }
+    // }
+
+
+}
+
+</script>
+
+
+{{end}}

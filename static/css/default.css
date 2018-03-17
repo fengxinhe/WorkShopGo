@@ -52,7 +52,7 @@
 	}
 
 
-	.container
+	.containermo
 	{
 		margin: 0px auto;
 		width: 1200px;
@@ -230,7 +230,7 @@
 /* Header                                                                        */
 /*********************************************************************************/
 
-	#header-wrapper
+	#head-wrapper
 	{
 		overflow: hidden;
 		padding: 2em 0em;

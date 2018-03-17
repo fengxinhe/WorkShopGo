@@ -31,6 +31,8 @@ func routes() *httprouter.Router {
     router.GET("/featured/create",wrapHandler(http.HandlerFunc(controller.CreateProjectGet)))
     router.POST("/featured/create",wrapHandler(http.HandlerFunc(controller.CreateProjectPost)))
 
+    router.GET("/featured/show",wrapHandler(http.HandlerFunc(controller.ShowProjectGet)))
+
 
     return router
 }

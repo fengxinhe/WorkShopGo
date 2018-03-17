@@ -14,7 +14,7 @@
 
             <div class="step-counter">
                <p> total step:
-                <input type="text" id="stepcount" name="stepcount">
+                <input type="text" id="stepcount" name="stepcount" class="form-control" value="1">
             </div>
             <div class="stepContent-left">
                         <label for="project_img">img</label>
@@ -29,7 +29,7 @@
 
             <label>title</label>
             <div>
-                <input id="steptitle1"type="text" class="step-title" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" />
+                <input id="steptitle1"type="text" class="form-control" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" />
             </div>
 
             <button id="edit1" class="btn btn-primary"  type="button">Edit</button>
@@ -61,6 +61,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+    var stepcount=1;
 
     var postForm = function() {
     //$("#summernotecode").val(code);
@@ -96,7 +97,6 @@ document.getElementById('project-content').addEventListener('click', function (e
         //stepcontents[id]=markup;
         //var codeid="summernote"+id;
         $("#"+"summernotecode"+id).val(markup);
-        console.log($("#summernotecode1").html());
         $('#'+"summernote-container"+id).summernote('destroy');
 
     }
@@ -106,13 +106,13 @@ document.getElementById('project-content').addEventListener('click', function (e
       e.preventDefault();
       stepcount++;
       $("#stepcount").val(stepcount);
-
       var nextstep=$('<div></div>');
       nextstep.attr('id', "step"+stepcount);
       nextstep.addClass("step");
 
-      var titlebar=$('<div><input type="text" class="step-title" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" /></div>');
+      var titlebar=$('<div><input type="text" class="form-control" id="step_title"  maxlength="48" placeholder="title" value="{{.step_title}}" /></div>');
       titlebar.attr('id',"steptitle"+stepcount);
+      titlebar.attr('name',"step_title"+stepcount);
 
       var editbtn=$('<button class="btn btn-primary" type="button"> edit</button>');
       editbtn.attr("id","edit"+stepcount);
@@ -167,7 +167,6 @@ document.getElementById('project-content').addEventListener('click', function (e
 
 
 
-    var stepcount=1;
 
 });
 

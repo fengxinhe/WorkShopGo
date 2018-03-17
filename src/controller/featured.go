@@ -3,12 +3,12 @@ package controller
 import (
     "fmt"
     //"os"
-    //s"io"
-    //"io/ioutil"
+    //"io"
+    "io/ioutil"
     "net/http"
     "../view"
     "../model"
-//    "log"
+    "log"
     //"regexp"
     //"errors"
     "gopkg.in/mgo.v2/bson"
@@ -21,12 +21,23 @@ import (
 
      "strconv"
 )
+type Test struct{
+    Content   string
+}
+func ShowProjectGet(w http.ResponseWriter, r *http.Request) {
+    v := view.New(r)
+    v.Name = "project"
+    v.Data["Content"]="<p>pppsddp</p>"
+    //io.WriteString(w, "<p>pppsddp</p>")
+    v.RenderTemplate(w)
+    return
+}
 
 
 func CreateProjectGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "new_project"
-    view.Repopulate([]string{"class_surface_img","class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
+    //view.Repopulate([]string{"class_surface_img","class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
     v.RenderTemplate(w)
 }
 
@@ -37,6 +48,8 @@ func CreateProjectGet(w http.ResponseWriter, r *http.Request) {
 //     ProjectCategory string              `bson:"project_tag1"`
 //     ProjectChannel  string              `bson:"project_tag2"`
 //     ProjectHeat     int                 `bson:"project_heat"`
+//      ProjectStepNum int
+//      ProjectStepTitle []string
 // }
 func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
 
@@ -44,19 +57,37 @@ func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
     r.ParseMultipartForm(32 << 20)
    //file, handler, err := r.FormFile("editdata")
    var project model.Project
+   project.ProjectID = bson.NewObjectId()
+   project.ProjectTitle = r.FormValue("project_title")
+   stepcount := r.FormValue("stepcount")
+   project.ProjectHeat = 10
    project.ProjectSteps=make(map[string]string)
 
-   stepcount := r.FormValue("stepcount")
    cnt, _ := strconv.Atoi(stepcount)
+   project.ProjectStepNum = cnt
+
    fmt.Println(r.FormValue("summernotecode2"))
 
    for i := 1; i <= cnt; i++ {
        var temp=r.FormValue("summernotecode"+strconv.Itoa(i))
+       var steptitle = r.FormValue("step_title"+strconv.Itoa(i))
        //fmt.Println(temp)
-       project.ProjectSteps["step"+strconv.Itoa(i)]=temp
+       project.ProjectStepTitle=append(project.ProjectStepTitle, steptitle)
+       var fn=project.ProjectID.String()+"_step_"+strconv.Itoa(i)
+       project.ProjectSteps[steptitle]=saveFile(fn, temp)
    }
 
-   project.ProjectID = bson.NewObjectId()
+   project.ProjectCategory = "test"
+   project.ProjectChannel = "tttest"
+   if err := model.CreateProject(project); err != nil {
+       log.Println(err)
+       //respondWithError(w, http.StatusInternalServerError, err.Error())
+       return
+   } else {
+       http.Redirect(w, r, "/", http.StatusFound)
+       return
+   }
+
    //dd :=r.FormValue("summernotecode1")
    // if err != nil {
    //     fmt.Println(err)
@@ -67,9 +98,14 @@ func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
    //fmt.Println(handler.Filename)
 
     //var c=r.FormValue("content")
-    fmt.Println(project.ProjectSteps)
-
-
+    fmt.Println("ok")
 
     //CreateProjectPost(w, r)
+}
+
+func saveFile(fn string, content string) string {
+    data := []byte(content)
+    path := "/home/firebug/goweb/static/projects/files/"+fn
+    ioutil.WriteFile(path, data,0600)
+    return path
 }
