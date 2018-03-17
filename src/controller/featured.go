@@ -21,18 +21,27 @@ import (
 
      "strconv"
 )
-type Test struct{
-    Content   string
-}
+
 func ShowProjectGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
     v.Name = "project"
-    v.Data["Content"]="<p>pppsddp</p>"
-    //io.WriteString(w, "<p>pppsddp</p>")
+    var project = model.GetProject()
+    var content = ""
+    for i:=0; i<project.ProjectStepNum;i++{
+        title := project.ProjectStepTitle[i]
+        path:=project.ProjectSteps[title]
+        content += readfile(path)
+    }
+
+    v.Data["Content"]=content
     v.RenderTemplate(w)
     return
 }
 
+func readfile(path string) string{
+    data,_ := ioutil.ReadFile(path)
+    return string(data[:])
+}
 
 func CreateProjectGet(w http.ResponseWriter, r *http.Request) {
     v := view.New(r)
@@ -66,12 +75,9 @@ func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
    cnt, _ := strconv.Atoi(stepcount)
    project.ProjectStepNum = cnt
 
-   fmt.Println(r.FormValue("summernotecode2"))
-
    for i := 1; i <= cnt; i++ {
        var temp=r.FormValue("summernotecode"+strconv.Itoa(i))
        var steptitle = r.FormValue("step_title"+strconv.Itoa(i))
-       //fmt.Println(temp)
        project.ProjectStepTitle=append(project.ProjectStepTitle, steptitle)
        var fn=project.ProjectID.String()+"_step_"+strconv.Itoa(i)
        project.ProjectSteps[steptitle]=saveFile(fn, temp)

@@ -55,7 +55,17 @@ func GetProjects() *[]Project{
     return &projects
 }
 
-// func GetClassByHeat() *[]Class{
-//     //class := from db
-//
-// }
+func GetProject() *Project{
+    var project Project
+    //var projects []Project
+    session := database.Mongo.Copy()
+    defer session.Close()
+    c := session.DB(database.ReadConfig().MongoDB.Database).C("project")
+    err := c.Find(bson.M{"ProjectStepNum": 3}).One(&project)
+    if err != nil {
+        log.Println("get project error",err)
+    }
+    //project=projects[0]
+    //fmt.Println(project)
+    return &project
+}

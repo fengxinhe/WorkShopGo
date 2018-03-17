@@ -28,9 +28,7 @@
             <div id="step1" class="step">
 
             <label>title</label>
-            <div>
-                <input id="steptitle1"type="text" class="form-control" id="step_title" name="step_title" maxlength="48" placeholder="title" value="{{.step_title}}" />
-            </div>
+                <input id="steptitle1"type="text" class="form-control" id="step_title" name="step_title1" maxlength="48" placeholder="title"  />
 
             <button id="edit1" class="btn btn-primary"  type="button">Edit</button>
             <button id="save1" class="btn btn-primary"  type="button">Save</button>
@@ -110,7 +108,7 @@ document.getElementById('project-content').addEventListener('click', function (e
       nextstep.attr('id', "step"+stepcount);
       nextstep.addClass("step");
 
-      var titlebar=$('<div><input type="text" class="form-control" id="step_title"  maxlength="48" placeholder="title" value="{{.step_title}}" /></div>');
+      var titlebar=$('<input type="text" class="form-control" id="step_title"  maxlength="48" placeholder="title" />');
       titlebar.attr('id',"steptitle"+stepcount);
       titlebar.attr('name',"step_title"+stepcount);
 
