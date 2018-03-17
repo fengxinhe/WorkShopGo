@@ -10,17 +10,17 @@ import(
 type Project struct{
     ProjectID       bson.ObjectId       `bson:"project_id,omitempty"`
     ProjectTitle    string              `bson:"project_title"`
-    ProjectSummary  string              `bson:"project_summary"`
-    ProjectContent  string              `bson:"project_content"`
-    FirstTag        string              `bson:"project_tag1"`
-    SecondTag       string              `bson:"project_tag2"`
+    ProjectSteps    map[string]string   `bson:"project_steps"`
+    ProjectCategory string              `bson:"project_tag1"`
+    ProjectChannel  string              `bson:"project_tag2"`
     ProjectHeat     int                 `bson:"project_heat"`
 }
 
 type Step struct {
     ProjectID       bson.ObjectId
-    Imgs            string
-    Videos          string
+    StepTitle       string
+    Imgs            []string
+    Videos          []string
     Text            string
 
 }
