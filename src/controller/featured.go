@@ -18,14 +18,22 @@ import (
     //"github.com/disintegration/imaging"
     //"github.com/gorilla/schema"
     //"strings"
-
      "strconv"
+     mux "github.com/julienschmidt/httprouter"
+
 )
 
-func ShowProjectGet(w http.ResponseWriter, r *http.Request) {
+func getProject(name mux.Params) (string){
+    id := name.ByName("name")
+    return id
+}
+
+func ShowProjectGet(w http.ResponseWriter, r *http.Request, name mux.Params) {
+    //title := r.URL.Path[len("/view/"):]
+    pid :=getProject(name)
     v := view.New(r)
     v.Name = "project"
-    var project = model.GetProject()
+    var project = model.GetProject(pid)
     var content = ""
     for i:=0; i<project.ProjectStepNum;i++{
         title := project.ProjectStepTitle[i]
@@ -43,7 +51,9 @@ func readfile(path string) string{
     return string(data[:])
 }
 
-func CreateProjectGet(w http.ResponseWriter, r *http.Request) {
+func CreateProjectGet(w http.ResponseWriter, r *http.Request, _ mux.Params) {
+    fmt.Println("geeeeeeeeeeeeeet")
+    fmt.Println("to create the new")
     v := view.New(r)
     v.Name = "new_project"
     //view.Repopulate([]string{"class_surface_img","class_title", "class_summary", "class_content","first_tag","secondtag"}, r.Form, v.Data)
@@ -60,13 +70,17 @@ func CreateProjectGet(w http.ResponseWriter, r *http.Request) {
 //      ProjectStepNum int
 //      ProjectStepTitle []string
 // }
-func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
+func CreateProjectPost(w http.ResponseWriter, r *http.Request,_ mux.Params) {
 
-    //var class model.Project
+    //title:=getProject(name)
+    fmt.Println("post")
+    //check the title if exist
+
+
     r.ParseMultipartForm(32 << 20)
-   //file, handler, err := r.FormFile("editdata")
    var project model.Project
    project.ProjectID = bson.NewObjectId()
+   project.ProjectName = r.FormValue("project_title")
    project.ProjectTitle = r.FormValue("project_title")
    stepcount := r.FormValue("stepcount")
    project.ProjectHeat = 10
@@ -90,7 +104,7 @@ func CreateProjectPost(w http.ResponseWriter, r *http.Request) {
        //respondWithError(w, http.StatusInternalServerError, err.Error())
        return
    } else {
-       http.Redirect(w, r, "/", http.StatusFound)
+       http.Redirect(w, r, "/featured/show/"+project.ProjectName, http.StatusFound)
        return
    }
 

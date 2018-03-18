@@ -9,6 +9,7 @@ import(
 
 type Project struct{
     ProjectID           bson.ObjectId       `bson:"project_id"`
+    ProjectName         string              `bson:"project_name"`
     ProjectTitle        string              `bson:"project_title"`
     ProjectSteps        map[string]string   `bson:"project_steps"`
     ProjectCategory     string              `bson:"project_category"`
@@ -55,13 +56,13 @@ func GetProjects() *[]Project{
     return &projects
 }
 
-func GetProject() *Project{
+func GetProject(name string) *Project{
     var project Project
     //var projects []Project
     session := database.Mongo.Copy()
     defer session.Close()
     c := session.DB(database.ReadConfig().MongoDB.Database).C("project")
-    err := c.Find(bson.M{"ProjectStepNum": 3}).One(&project)
+    err := c.Find(bson.M{"project_name": name}).One(&project)
     if err != nil {
         log.Println("get project error",err)
     }

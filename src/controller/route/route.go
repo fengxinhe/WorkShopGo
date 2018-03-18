@@ -28,10 +28,10 @@ func routes() *httprouter.Router {
 
     router.POST("/classes/create",wrapHandler(http.HandlerFunc(controller.CreateClassPost)))
 
-    router.GET("/featured/create",wrapHandler(http.HandlerFunc(controller.CreateProjectGet)))
-    router.POST("/featured/create",wrapHandler(http.HandlerFunc(controller.CreateProjectPost)))
+    router.GET("/featured/create",controller.CreateProjectGet)
+    router.POST("/featured/create",controller.CreateProjectPost)
 
-    router.GET("/featured/show",wrapHandler(http.HandlerFunc(controller.ShowProjectGet)))
+    router.GET("/featured/show/:name",controller.ShowProjectGet)
 
 
     return router
